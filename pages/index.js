@@ -1,124 +1,373 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
+import { useEffect, useRef, useState } from 'react'
+import Typed from 'typed.js'
+import Head from 'next/head'
+import styles from '../styles/home.module.css'
 
 export default function Home() {
+  const mycardRef = useRef("")
+  const lreanRef = useRef("")
+  const textRef = useRef("")
+  let [state, setState] = useState()
+  
+  // let [headerHeight, setHeadderHeight] = useState('')
+
+  useEffect(() => {
+    let navigation = document.querySelector('.navigation')
+    let mycard = document.querySelector('#mycard')
+
+    if (state && state === true) {
+      navigation.classList.remove('active')
+    } else {
+      navigation.classList.add('active')
+    }
+    // let mycardTop = mycard&&mycard.offset().top;
+    let mycardTop = mycardRef && getTop(mycardRef.current) - mycardRef.current.clientHeight / 2 - 35
+    window.onscroll = function () {
+      var e = e || window.event;
+      var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      // console.log(mycardTop ,scrollTop )
+      if (scrollTop > mycardTop) {
+        mycard.classList.add('scroll')
+      } else {
+        mycard.classList.remove('scroll')
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state])
+
+  
+  useEffect(() => {
+    const typed = new Typed(textRef.current, {
+      strings: [
+        'Frontend Lreaner', 
+        "CQUPT Student", 
+      ],
+      typeSpeed: 150,
+      backSpeed: 150,
+      backDelay: 1200,
+      loop: true
+    })
+
+    // Destroying
+    return () => {
+      typed.destroy();
+    };
+  }, []);
+
+
+  const getTop = (e) => {  // e:dom元素
+    var offset = e.offsetTop;
+    if (e.offsetParent != null) offset += getTop(e.offsetParent);
+    return offset;
+  }
+
+  const goToLrean = () => {
+    const scrollHeight = getTop(lreanRef.current) - 70
+    console.log(scrollHeight)
+    window.scrollTo({
+      top: scrollHeight,
+      behavior: "smooth"
+    })
+  }
+
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">pages/index.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <>
+      <div className="box">
+        <Head>
+          <title>主页</title>
+        </Head>
+        {/* <Nav /> */}
+        <div className="navigation" >
+          {/* <img src=" ./banner.png" alt=""/> */}
+          <div className="nav-titleBox co zz">
+            {/* <!-- 占位符 --> */}
+            <div className="co-left"></div>
+            {/* <!-- 标题 --> */}
+            <div className="co-right ">
+              {/* <span className="titleBox-tag">HI MY NEW FRIEND!</span> */}
+              <h3>Hello, It’s Me</h3>
+              <h1>Call Me Ruhangs</h1>
+              <h3><span>And I’m a</span> <i ref={textRef}></i></h3>
+              {/* href="#next-one" */}
+              <i className="buttom navbtn" onClick={goToLrean}> 了解一下
+              </i>
+            </div>
+          </div>
+        </div>
+        <div className="container content zz" ref={lreanRef}>
+          <div className="co-left">
+            {/* <!-- 简历吸盘 --> */}
+            <div className="me-card carbox borderbefore" ref={mycardRef} id="mycard">
+              <div className="mecar-title">
+                <div className="me-image">
+                  <span className="status">
+                    <i>努力奋斗</i>
+                  </span>
+                  <img src="./img/toux.jpg" alt="" />
+                </div>
+                <h3>阮同学</h3>
+                <p className="me-hover">
+                  <span>每天进步一点点！</span>
+                </p>
+              </div>
+              <div className="borderbotm"></div>
+              <div className="lianxi-list">
+                <a title="wx:w1457321681">
+                  <svg t="1649145899448" className="icon" viewBox="0 0 1024 1024" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" p-id="14861" width="15" height="15">
+                    <path
+                      d="M506.942 345.921c25.259 0 42.134-16.916 42.134-42.107 0-25.477-16.848-41.956-42.134-41.956-25.299 0-50.668 16.48-50.668 41.956 0.028 25.204 25.409 42.107 50.668 42.107l0 0zM506.942 345.921zM271.257 261.857c-25.259 0-50.79 16.48-50.79 41.956 0 25.19 25.532 42.107 50.79 42.107 25.163 0 42.012-16.916 42.012-42.107-0.014-25.477-16.834-41.956-42.012-41.956l0 0zM271.257 261.857zM1010.654 615.492c0-133.202-123.563-246.702-275.237-258.512 0.205-1.652 0.301-3.373-0.068-5.092-30.406-141.79-182.886-248.695-354.7-248.695-194.15 0-352.119 135.387-352.119 301.793 0 89.279 45.574 169.725 131.946 233.158l-30.106 90.508c-1.939 5.885-0.177 12.37 4.506 16.452 2.853 2.458 6.445 3.741 10.076 3.741 2.335 0 4.697-0.546 6.867-1.625l113.036-56.565 13.926 2.827c34.802 7.154 64.853 13.353 101.868 13.353 10.895 0 40.878-3.987 43.404-7.182 40.755 101.99 153.094 175.61 285.273 175.61 33.86 0 68.13-8.164 98.891-15.866l87.136 47.636c2.307 1.257 4.847 1.911 7.359 1.911 3.441 0 6.881-1.161 9.639-3.413 4.847-3.932 6.841-10.404 5.038-16.33l-22.255-74.001c74.602-58.955 115.521-129.488 115.521-199.708l0 0zM409.798 665.75c-9.626 0.833-19.388 1.243-29.082 1.243-32.686 0-60.334-5.652-92.31-12.26l-18.582-3.755c-3.195-0.683-6.567-0.245-9.503 1.269l-81.687 40.892 21.231-63.775c2.076-6.24-0.205-13.053-5.57-16.821-82.07-57.207-123.659-126.894-123.659-207.093 0-144.179 139.087-261.516 310.067-261.516 151.142 0 284.959 91.955 312.579 214.261-158.475 2.076-286.706 113.487-286.706 250.32 0 19.893 3.018 39.171 8.11 57.767-1.542-0.382-3.168-0.683-4.887-0.532l0 0zM860.371 788.699c-4.875 3.673-6.935 10.007-5.188 15.852l13.804 45.903-56.647-30.993c-2.157-1.188-4.588-1.803-7.004-1.803-1.188 0-2.389 0.15-3.564 0.464-30.379 7.674-61.822 15.593-92.433 15.593-142.186 0-257.857-97.717-257.857-217.811 0-120.095 115.658-217.771 257.857-217.771 139.469 0 257.325 99.724 257.325 217.771 0 59.87-37.738 121.255-106.291 172.797l0 0zM868.181 797.178zM616.454 506.006c-16.848 0-33.696 16.971-33.696 33.792 0 16.944 16.848 33.669 33.696 33.669 25.313 0 42.038-16.725 42.038-33.669 0-16.848-16.725-33.792-42.038-33.792l0 0zM616.454 506.006zM801.58 506.006c-16.603 0-33.451 16.971-33.451 33.792 0 16.944 16.848 33.669 33.451 33.669 25.231 0 42.257-16.725 42.257-33.669 0-16.848-16.998-33.792-42.257-33.792l0 0zM801.58 506.006z"
+                      p-id="14862"></path>
+                  </svg>
+                </a>
+                <a title="github:wttAndroid" href="https://gitee.com/wttAndroid">
+                  <svg t="1649145950732" className="icon" viewBox="0 0 1024 1024" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" p-id="16367" width="15" height="15">
+                    <path
+                      d="M695.765333 981.333333h-276.053333c-26.794667 0-47.317333-21.077333-47.317333-48.64V739.84c0-29.184 6.314667-56.746667 17.365333-81.066667-129.365333-48.64-214.528-150.784-214.528-264.277333 0-53.504 17.365333-103.765333 50.474667-147.498667-12.629333-42.154667-15.786667-95.658667-12.629334-157.269333C216.234667 62.122667 236.8 42.666667 261.973333 42.666667c14.208 0 134.101333 1.621333 203.52 64.853333a504.448 504.448 0 0 1 184.533334 0C717.866667 44.288 837.717333 42.666667 853.504 42.666667c25.216 0 45.738667 19.456 47.317333 45.397333 4.693333 61.610667 0 115.114667-12.629333 157.269333C921.301333 290.688 938.666667 340.906667 938.666667 392.832c0 113.493333-85.162667 215.637333-214.528 264.277333a207.786667 207.786667 0 0 1 17.365333 81.066667v192.896c1.578667 27.562667-20.48 50.261333-45.738667 50.261333z m-228.693333-97.28h181.333333V739.84c0-27.562667-12.586667-53.504-33.109333-71.338667-14.165333-11.349333-20.48-30.805333-15.786667-50.261333 4.778667-17.834667 18.944-32.426667 36.309334-35.669333 123.050667-24.32 208.213333-102.144 208.213333-189.696 0-47.018667-25.258667-82.688-45.738667-105.386667-14.208-14.549333-17.365333-35.626667-7.893333-55.082667 6.314667-12.970667 15.786667-40.533333 15.786667-89.173333-39.466667 6.485333-85.205333 19.456-102.528 45.397333-11.093333 16.213333-31.573333 24.32-50.474667 19.456a393.045333 393.045333 0 0 0-194.005333 0c-18.944 4.864-37.888-3.242667-50.474667-19.456-17.365333-25.941333-63.146667-38.912-102.528-45.397333 1.578667 48.64 9.429333 76.202667 15.786667 89.173333 7.850667 17.834667 4.693333 40.533333-7.936 55.082667-20.48 22.698667-45.738667 58.368-45.738667 105.386667 0 87.552 85.205333 163.754667 208.213333 189.696 17.365333 3.242667 31.573333 17.834667 36.266667 35.669333 4.736 17.834667-1.578667 37.290667-15.786667 50.261333a95.104 95.104 0 0 0-33.109333 71.296v144.298667h3.157333z"
+                      fill="#172B4D" p-id="16368"></path>
+                    <path
+                      d="M403.968 788.394667c-212.949333 0-309.162667-194.56-313.898667-202.666667-11.050667-24.32-1.578667-53.461333 20.48-64.810667 23.68-11.349333 52.053333-1.621333 63.146667 21.077334 3.114667 6.485333 80.426667 157.269333 241.28 149.162666 26.837333-1.621333 48.896 19.456 48.896 46.976 1.578667 27.562667-18.901333 50.261333-45.738667 50.261334h-14.165333z"
+                      fill="#172B4D" p-id="16369"></path>
+                  </svg>
+                </a>
+                <a title="email:1457321681@qq.com" href="Mailto:1457321681@qq.com?Subject=邮箱标题&amp;Body=邮箱内容！">
+                  <svg t="1649145973361" className="icon" viewBox="0 0 1024 1024" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" p-id="17271" width="15" height="15">
+                    <path
+                      d="M983.899806 785.385782V224.886223h0.180631l-0.180631-4.696419c-0.180632-5.238314-0.722526-10.476627-1.806315-15.714941-2.890104-25.469042-21.675781-44.977245-45.519139-47.686717H122.287529c-11.741048 0-23.482096 1.625684-34.861881 5.238314-30.346093 10.295996-50.757453 40.100194-50.576821 74.058917v534.849885c-0.361263 21.314518 5.780208 42.087141 17.701887 59.789028l0.361263 0.722526 5.418946 3.973893c18.243782 21.856412 44.977245 34.319986 73.517022 34.500618H904.421944c37.751984 0 70.265655-27.094726 79.477862-66.291763l0.180631-0.541894c0.361263-5.96084 0.361263-11.741048-0.180631-17.701888zM390.16405 547.494091l55.453872 49.854295 43.893456 40.100194c5.418945 5.96084 13.005468 9.57347 21.133886 9.57347 7.947786 0 15.534309-3.431999 21.133886-9.57347l101.153642-91.941436 272.753572 263.721997H126.622685L390.16405 547.494091z m120.119951 30.346092L111.449638 216.03528H115.604163c214.409596-0.903158 703.559711-2.890104 793.875463-0.361263l-399.195625 362.166166z m165.458458-69.72376l251.619686-227.956959v474.518963L675.742459 508.116423z m-328.568707 0.180631L93.205856 760.278003V278.895043l253.967896 229.402011z"
+                      p-id="17272"></path>
+                  </svg>
+                </a>
+                <a title="QQ:1457321681">
+                  <svg t="1649146096754" className="icon" viewBox="0 0 1024 1024" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" p-id="18277" width="15" height="15">
+                    <path
+                      d="M537.576602 0c345.434577 0 362.285044 329.787714 362.285044 329.787714 52.356809 69.207276 24.072096 131.794725 24.072096 131.794725 168.504671 264.793055 59.578437 341.22196 29.488318 346.638181-29.488318 5.416222-58.374833-32.49733-58.374833-32.49733s-9.628838 37.913551-33.700934 58.374833c87.86315 40.922563 72.216288 92.075767 72.216288 92.075767s-18.655874 154.061414-383.94993 56.569425l-31.293725-5.416222c-350.248996 126.378504-393.578768-43.931575-393.578768-43.931575s-14.443258-71.012683 53.560413-97.491989c-39.718958-24.072096-53.560413-75.2253-53.560413-75.2253s-35.506341 57.77303-81.845126 36.709946C-3.443754 775.723291-31.728467 587.359141 143.997834 451.351799c0 0-25.275701-80.641521 32.49733-128.785713C176.495163 322.566085 192.142025 0 537.576602 0L537.576602 0 537.576602 0zM230.055576 341.22196C153.626672 406.216619 204.779876 471.211278 204.779876 471.211278 36.275204 574.72129 66.365324 742.022357 66.365324 742.022357s27.081108-13.239653 45.736982-52.356809c19.257677-39.117156 48.745994 6.619826 48.745994 6.619826s18.655874 89.066755 74.623497 123.971294c56.569425 34.904539-2.40721 57.171228-2.40721 57.171228s-61.985647 0.601802-56.569425 43.329773c5.416222 42.126168 205.81642 95.084779 325.575097 1.203605l63.791054 8.425234c209.427235 72.81809 312.937247 4.814419 319.557073-8.425234 6.619826-13.239653-31.895527-38.515353-67.401869-53.560413-35.506341-15.04506-44.533377-30.691922-13.239653-51.153204 31.293725-21.063084 43.931575-62.587449 61.985647-105.31542 18.054072-42.72797 45.736982-21.664886 49.347797-9.628838 3.610814 12.036048 29.488318 52.356809 29.488318 52.356809s68.003671-72.216288-73.419893-285.856139c0 0 30.691922-63.791054-21.063084-116.147863 0 0-12.63785-300.299397-320.158876-300.299397C224.639355 52.356809 230.055576 341.22196 230.055576 341.22196L230.055576 341.22196 230.055576 341.22196z"
+                      p-id="18278"></path>
+                  </svg>
+                </a>
+              </div>
+              <div className="borderbotm"></div>
+              <div className="mecar-bottm">
+                <div>
+                  <span className="mecarbottm-key">毕业院校</span>
+                  <span className="mecarbottm-value">重庆邮电大学</span>
+                </div>
+                <div>
+                  <span className="mecarbottm-key">所在城市</span>
+                  <span className="mecarbottm-value">重庆 渝北</span>
+                </div>
+                <div>
+                  <span className="mecarbottm-key">年级</span>
+                  <span className="mecarbottm-value">24届毕业生</span>
+                </div>
+
+              </div>
+              <div className="borderbotm"></div>
+              <div className="buttom-box ">
+                <a className="button" href="Mailto:1457321681@qq.com?Subject=邮箱标题&amp;Body=邮箱内容！">联系我</a>
+              </div>
+            </div>
+          </div>
+          {/* <!-- 右边 --> */}
+          <div className="co-right" id="lrean"  >
+            {/* <!-- 完成项目 --> */}
+            <div className={"content-li" + " " + "li1" + " " + styles.li1Layout}>
+              <div className={styles.li1Box + ' ' + 'borderbefore'}>
+                <span>15</span>
+                <div className="borderbotm"></div>
+                <p>文   章</p>
+              </div>
+              <div className={styles.li1Box + ' ' + 'borderbefore'}>
+                <span>3</span>
+                <div className="borderbotm"></div>
+                <p>项   目</p>
+              </div>
+              <div className={styles.li1Box + ' ' + 'borderbefore'}>
+                <span>5</span>
+                <div className="borderbotm"></div>
+                <p>访   客</p>
+              </div>
+            </div>
+
+            <div className="content-li li4" >
+              <h3>
+                <span>技术栈</span>
+                <div className="borderbotm"></div>
+                <span>01</span>
+              </h3>
+              <div className={styles.li4Box}>
+                <div className="carbox">
+                  <svg t="1649230330671" className="icon" viewBox="0 0 1024 1024" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" p-id="1638" width="40" height="40">
+                    <path
+                      d="M488.96 506.88h40.96v307.2h-40.96zM803.84 737.28h-97.28c-45.056 0-81.92-36.864-81.92-81.92V502.272h40.96V655.36c0 22.528 18.432 40.96 40.96 40.96h97.28v40.96zM312.32 737.28H215.04v-40.96h97.28c22.528 0 40.96-18.432 40.96-40.96V502.272h40.96V655.36c0 45.056-36.864 81.92-81.92 81.92z"
+                      fill="#254665" p-id="1639"></path>
+                    <path
+                      d="M509.44 942.08c-46.592 0-84.48-37.888-84.48-84.48S462.848 773.12 509.44 773.12s84.48 37.888 84.48 84.48-37.888 84.48-84.48 84.48z m0-128c-24.064 0-43.52 19.456-43.52 43.52s19.456 43.52 43.52 43.52 43.52-19.456 43.52-43.52-19.456-43.52-43.52-43.52zM171.52 798.72c-46.592 0-84.48-37.888-84.48-84.48S124.928 629.76 171.52 629.76 256 667.648 256 714.24 218.112 798.72 171.52 798.72z m0-128c-24.064 0-43.52 19.456-43.52 43.52s19.456 43.52 43.52 43.52 43.52-19.456 43.52-43.52-19.456-43.52-43.52-43.52zM847.36 798.72c-46.592 0-84.48-37.888-84.48-84.48s37.888-84.48 84.48-84.48 84.48 37.888 84.48 84.48-37.888 84.48-84.48 84.48z m0-128c-24.064 0-43.52 19.456-43.52 43.52s19.456 43.52 43.52 43.52 43.52-19.456 43.52-43.52-19.456-43.52-43.52-43.52z"
+                      fill="#254665" p-id="1640"></path>
+                    <path
+                      d="M683.52 543.232H319.488c-90.112 0-163.328-73.216-163.328-163.328 0-90.112 73.216-163.328 163.328-163.328h7.68C344.064 138.752 413.696 81.92 495.616 81.92c69.632 0 132.608 42.496 159.232 105.472 9.728-1.536 19.456-2.56 29.184-2.56 98.816 0 179.2 80.384 179.2 179.2-0.512 98.816-80.896 179.2-179.712 179.2zM319.488 258.048c-67.584 0-122.368 54.784-122.368 122.368s54.784 122.368 122.368 122.368h364.544c76.288 0 138.24-61.952 138.24-138.24s-61.952-138.24-138.24-138.24c-12.288 0-24.576 1.536-36.864 5.12l-19.456 5.12-5.632-18.944C605.696 161.792 553.472 122.88 495.616 122.88c-68.096 0-124.416 51.2-131.584 118.784l-2.048 22.016-21.504-3.584c-7.168-1.536-14.336-2.048-20.992-2.048z"
+                      fill="#254665" p-id="1641"></path>
+                    <path
+                      d="M655.36 640H307.2V424.96c0-33.792 27.648-61.44 61.44-61.44h348.16v215.04c0 33.792-27.648 61.44-61.44 61.44z"
+                      fill="#254665" opacity=".18" p-id="1642"></path>
+                  </svg>
+                  <h4>UI设计</h4>
+                  <p>
+                    UI排版<br />
+                    响应式页面<br />
+                    静态页面、动画效果<br />
+                  </p>
+                  <a>ORDER NOW</a>
+                </div>
+                <div className="carbox">
+                  <svg t="1649230368898" className="icon" viewBox="0 0 1024 1024" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" p-id="1847" width="40" height="40">
+                    <path
+                      d="M153.6 460.8h-40.96V179.2c0-45.056 34.816-81.92 78.336-81.92H921.6v230.4h-40.96V138.24H190.976c-20.48 0-37.376 18.432-37.376 40.96v281.6zM843.776 783.36H112.64v-216.064h40.96V742.4h690.176c20.48 0 37.376-18.432 37.376-40.96v-141.824h40.96V701.44c-0.512 45.056-35.328 81.92-78.336 81.92zM220.16 885.76h593.92v40.96H220.16z"
+                      fill="#333333" p-id="1848"></path>
+                    <path
+                      d="M418.304 388.096l17.408 83.968 27.648-83.968H481.28l24.576 82.432 16.384-82.432h36.864l-27.648 130.048h-39.424L470.528 455.68 450.56 518.144h-39.424l-29.696-130.048h36.864zM611.328 388.096l17.408 83.968 27.648-83.968h17.92l24.576 82.432 16.384-82.432h36.864l-27.648 130.048h-39.424L663.552 455.68l-19.968 62.464H604.16l-29.696-130.048h36.864zM804.352 388.096l17.408 83.968 27.648-83.968h17.92l24.576 82.432 16.384-82.432h36.864l-27.648 130.048h-39.424L856.576 455.68l-19.968 62.464h-39.424l-29.696-130.048h36.864z"
+                      fill="#EB4446" p-id="1849"></path>
+                    <path
+                      d="M839.168 445.44h-512V179.2c0-33.792 27.648-61.44 61.44-61.44h512v266.24c0 33.792-27.648 61.44-61.44 61.44z"
+                      fill="#333333" opacity=".18" p-id="1850"></path>
+                    <path d="M496.64 762.88h40.96v143.36h-40.96z" fill="#333333" p-id="1851"></path>
+                  </svg>
+                  <h4>网页制作</h4>
+                  <p>
+                    HTML、JS、css、scss<br />
+                    JS交互<br />
+                    AJAX数据渲染<br />
+                  </p>
+                  <a>ORDER NOW</a>
+                </div>
+                <div className="carbox">
+                  <svg t="1649230380175" className="icon" viewBox="0 0 1024 1024" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" p-id="2002" width="40" height="40">
+                    <path
+                      d="M738.304 689.664h-59.392v-40.96h59.392c89.6 0 162.816-74.24 162.816-164.864 0-91.136-73.216-164.864-162.816-164.864-9.216 0-18.944 1.024-28.16 2.56l-21.504 3.584-2.048-22.016C677.376 211.968 602.112 143.36 512 143.36c-90.624 0-165.888 68.608-175.104 159.744l-2.048 22.016-21.504-3.584c-9.216-1.536-18.432-2.56-28.16-2.56-89.6 0-162.816 74.24-162.816 164.864 0 91.136 73.216 164.864 162.816 164.864h59.904v40.96H285.184c-112.128 0-203.776-92.672-203.776-205.824s91.136-205.824 203.776-205.824c4.608 0 9.728 0 14.336 0.512C319.488 176.64 407.04 102.4 511.488 102.4c104.96 0 192.512 74.24 212.48 175.616 4.608-0.512 9.216-0.512 14.336-0.512 112.128 0 203.776 92.672 203.776 205.824s-91.136 206.336-203.776 206.336z"
+                      fill="#333333" p-id="2003"></path>
+                    <path d="M574.464 679.936L512 617.984l-62.464 61.952-28.672-28.672 91.136-91.648 91.136 91.648z"
+                      fill="#EB4446" p-id="2004"></path>
+                    <path d="M491.52 614.4h40.96v171.52h-40.96z" fill="#EB4446" p-id="2005"></path>
+                    <path
+                      d="M512 928.768c-3.584 0-7.68-1.024-10.752-3.072l-187.392-119.296c-6.144-3.584-9.728-10.24-9.728-17.408v-239.104c0-7.168 3.584-13.312 9.728-17.408l187.392-119.296c6.656-4.096 15.36-4.096 22.016 0l187.392 119.296c6.144 3.584 9.728 10.24 9.728 17.408V788.48c0 7.168-3.584 13.312-9.728 17.408l-187.392 119.296c-3.584 2.56-7.68 3.584-11.264 3.584z m-166.912-151.552l166.912 106.496 166.912-106.496v-216.576L512 454.656l-166.912 106.496v216.064z m354.304 11.264z"
+                      fill="#333333" p-id="2006"></path>
+                    <path
+                      d="M675.84 675.84H286.72V409.6c0-33.792 27.648-61.44 61.44-61.44h389.12v266.24c0 33.792-27.648 61.44-61.44 61.44z"
+                      fill="#333333" opacity=".18" p-id="2007"></path>
+                  </svg>
+                  <h4>前端</h4>
+                  <p>
+                    vue框架<br />
+                    UI框架<br />
+                    uniapp小程序
+                  </p>
+                  <a>ORDER NOW</a>
+                </div>
+                <div className="carbox">
+                  <svg t="1649230391217" className="icon" viewBox="0 0 1024 1024" version="1.1"
+                    xmlns="http://www.w3.org/2000/svg" p-id="2160" width="40" height="40">
+                    <path
+                      d="M512 942.08c-99.328 0-174.08-184.832-174.08-430.08s74.752-430.08 174.08-430.08 174.08 184.832 174.08 430.08-74.752 430.08-174.08 430.08z m0-819.2c-62.976 0-133.12 159.744-133.12 389.12s70.144 389.12 133.12 389.12 133.12-159.744 133.12-389.12-70.144-389.12-133.12-389.12z"
+                      fill="#333333" p-id="2161"></path>
+                    <path d="M102.4 491.52h814.592v40.96H102.4z" fill="#EB4446" p-id="2162"></path>
+                    <path
+                      d="M512 942.08c-85.504 0-167.936-25.088-239.104-72.192l22.528-33.792C359.936 878.592 434.688 901.12 512 901.12c214.528 0 389.12-174.592 389.12-389.12s-174.592-389.12-389.12-389.12-389.12 174.592-389.12 389.12c0 82.944 25.6 161.792 74.24 228.864l-33.28 24.064C110.08 691.2 81.92 603.648 81.92 512c0-237.056 193.024-430.08 430.08-430.08s430.08 193.024 430.08 430.08-193.024 430.08-430.08 430.08z"
+                      fill="#333333" p-id="2163"></path>
+                    <path
+                      d="M860.16 793.6H419.84V496.64c0-33.792 27.648-61.44 61.44-61.44h440.32v296.96c0 33.792-27.648 61.44-61.44 61.44z"
+                      fill="#333333" opacity=".18" p-id="2164"></path>
+                  </svg>
+                  <h4>后端</h4>
+                  <p>
+                    nodjes+express+mysql<br />
+                    koa<br />
+                    socket<br />
+                  </p>
+                  <a>ORDER NOW</a>
+                </div>
+              </div>
+            </div>
+            {/* <!-- 最近完成 --> */}
+            <div className="content-li li6">
+              <h3>
+                <span>个人项目
+                </span>
+                <div className="borderbotm"></div>
+                <span>02</span>
+              </h3>
+              <div className={styles.li6Box}>
+                <div className="carbox">
+                  <a className={styles.imgbox} href="http://123.56.144.92/nav/index.html">
+                    <img src=" ./img/project/daohanglan.png" alt="" />
+                  </a>
+                  <div className={styles.li6carTitle}>
+                    导航栏:基本实现:ul/li/a:hover
+                    <br /><br />2022.03.25
+                    <div className="borderbotm"></div>
+                    <a href="http://123.56.144.92/nav/index.html">进入浏览</a>
+                  </div>
+                </div>
+                <div className=" carbox">
+                  <a className={styles.imgbox} href="http://123.56.144.92/hualang/index.html">
+                    <img src="./img/project/hualang.png" alt="" />
+                  </a>
+                  <div className={styles.li6carTitle}>
+                    画廊海报：基本实现:iframe/a/marquee
+                    <br />2022.03.18
+                    <div className="borderbotm"></div>
+                    <a href="http://123.56.144.92/hualang/index.html">进入浏览</a>
+                  </div>
+                </div>
+                <div className="carbox">
+                  <a className={styles.imgbox} href="http://123.56.144.92/jianli/index.html">
+                    <img src="./img/project/jianli.png" alt="" />
+                  </a>
+                  <div className={styles.li6carTitle}>
+                    个人简历:animation+粒子
+                    <br />2022.03.10
+                    <div className="borderbotm"></div>
+                    <a href="http://123.56.144.92/jianli/index.html">进入浏览</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="content-li li5">
+              <h3>
+                <span>近期文章</span>
+                <div className="borderbotm"></div>
+                <span>03</span>
+              </h3>
+              <div className={styles.li5Box}>
+                <div className={styles.li5boxUl} id="li5boxul">
+                  <div className={styles.li5boxCar + " " + 'carbox'} >
+                    <img src="./img/toux.jpg" alt="" />
+                    <h3>张老师</h3>
+                    <span>Android</span>
+                    <p>
+                      我业精于勤而荒于嬉，行成于思而毁于随。
+                    </p>
+                  </div>
+                  <div className={styles.li5boxCar + " " + 'carbox'}>
+                    <img src="./img/toux.jpg" alt="" />
+                    <h3>史老师</h3>
+                    <span>web前端开发</span>
+                    <p>
+                      青，取之于蓝而青于蓝;
+                      冰，水为之而寒于水。
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Discover and deploy boilerplate example Next.js&nbsp;projects.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p
-            className={`${inter.className} m-0 max-w-[30ch] text-sm opacity-50`}
-          >
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </>
   )
 }

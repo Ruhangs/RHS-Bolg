@@ -1,0 +1,12 @@
+
+.git {
+  position: absolute;
+  top: 0;
+  right: 7rem;
+}
+
+@media screen and (max-width: 950px) {
+  .git {
+    right: 4rem;
+  }
+}

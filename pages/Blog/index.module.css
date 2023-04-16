@@ -1,0 +1,156 @@
+.content {
+  margin-top: 70px;
+}
+
+.cat {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.left {
+  position: fixed;
+  left: 0;
+  height: 100%;
+  padding: 3rem 2rem;
+  scroll-behavior: smooth;
+}
+
+.left .noteList {
+  /* width: 20rem; */
+  height: 80%;
+  overflow-y: auto;
+  border-bottom: solid 1px #ddd ;
+}
+
+.noteList::-webkit-scrollbar {
+  width: 0.4rem;
+}
+
+.noteList::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.2);
+}
+
+.left .block {
+  display: block !important;
+  width: 16rem;
+  height: fit-content;
+  line-height: 2rem;
+  padding: 1rem;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 5px;
+}
+
+.left .noteList .link {
+  display: block !important;
+  height: 2rem;
+  line-height: 2rem;
+  padding: 1rem;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 5px;
+}
+
+.active {
+  background-color: #fee69945;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+}
+
+.main {
+  padding: 1rem 20rem;
+}
+
+.menu,.menuHidden {
+  display: none;
+}
+
+.nav {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 1rem 0 0 3rem;
+}
+
+.right {
+  position: fixed;
+  right: 0;
+  width: 20rem;
+  height: 50rem;
+  overflow-y: auto;
+}
+
+.right::-webkit-scrollbar {
+  width: 0.4rem;
+}
+
+.right::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+  background: rgba(0,0,0,0.2);
+}
+
+@media screen and (max-width: 950px) {
+  .main {
+    width: 100%;
+    padding: 0;
+  }
+
+  .menu {
+    display: block;
+    position: fixed;
+    left: -3px;
+    top: 12rem;
+    opacity: 0.5;
+  }
+
+  .fold {
+    display: none;
+  }
+
+  .nav {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+    padding: 1rem 0 0 2rem;
+  }
+
+  .cat {
+    position: fixed;
+    /* left: -100%; */
+    opacity: 0.9;
+    width: 100%;
+    height: 50rem;
+    overflow-y: scroll;
+    background-color: #222;
+  }
+
+  .left {
+    position: absolute;
+    width: 40%;
+    padding: 2rem 0.5rem;
+    background-color: #222;
+  }
+
+  .left .block {
+    width: 10rem;
+  }
+
+  .right {
+    position: absolute;
+    overflow-y: scroll;
+    width: 60%;
+    background-color: #222;
+    
+  }
+
+}
