@@ -13,19 +13,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+
       - name: Install dependencies
         run: npm install
 
       - name: Build Next.js app
         run: npm run build
 
-      - name: Deploy code
-        uses: easingthemes/ssh-deploy@v2.2.5
+      - name: Deploy to server
+        uses: easingthemes/ssh-deploy@v2.2.4
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          ARGS: "-rltgoDzvO --delete"  # rsync 命令参数，可根据需要修改
-        with:
-          server: ${{ secrets.SERVER }}
-          username: ${{ secrets.USERNAME }}
-          local_path: ./out/  # Next.js 应用程序的构建目录
-          remote_path: /home/www/blog/  # 服务器上的部署目录
+          REMOTE_HOST: ${{ secrets.SERVER }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
+          SOURCE: 'out/'
+          TARGET: '/home/www/blog/'
