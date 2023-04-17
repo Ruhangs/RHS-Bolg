@@ -1,0 +1,31 @@
+name: Deploy to server
+
+on:
+  push:
+    branches:
+      - main  # 部署 main 分支的代码
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Next.js app
+        run: npm run build
+
+      - name: Deploy code
+        uses: easingthemes/ssh-deploy@v2.2.5
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          ARGS: "-rltgoDzvO --delete"  # rsync 命令参数，可根据需要修改
+        with:
+          server: ${{ secrets.SERVER }}
+          username: ${{ secrets.USERNAME }}
+          local_path: ./out/  # Next.js 应用程序的构建目录
+          remote_path: /home/www/blog/  # 服务器上的部署目录
