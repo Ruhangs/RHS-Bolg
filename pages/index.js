@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
 import Typed from 'typed.js'
+import { getProfile, getBlogList, getVisitCount, updateVisitCount, getProjectList, getTechList } from './api/request'
 import Head from 'next/head'
+import dayjs from 'dayjs'
 import styles from '../styles/home.module.css'
+import Link from 'next/link'
 
-export default function Home() {
+export default function Home({ profileInfo, blogs, blogLasted, projects, hotProjects, techs, visitCount }) {
+  console.log(hotProjects)
+  profileInfo = profileInfo.attributes
   const mycardRef = useRef("")
   const lreanRef = useRef("")
   const textRef = useRef("")
   let [state, setState] = useState()
-  
-  // let [headerHeight, setHeadderHeight] = useState('')
 
   useEffect(() => {
     let navigation = document.querySelector('.navigation')
@@ -20,12 +23,10 @@ export default function Home() {
     } else {
       navigation.classList.add('active')
     }
-    // let mycardTop = mycard&&mycard.offset().top;
     let mycardTop = mycardRef && getTop(mycardRef.current) - mycardRef.current.clientHeight / 2 - 35
     window.onscroll = function () {
       var e = e || window.event;
       var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-      // console.log(mycardTop ,scrollTop )
       if (scrollTop > mycardTop) {
         mycard.classList.add('scroll')
       } else {
@@ -35,12 +36,13 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state])
 
-  
+
   useEffect(() => {
+
     const typed = new Typed(textRef.current, {
       strings: [
-        'Frontend Lreaner', 
-        "CQUPT Student", 
+        'Frontend Lreaner',
+        "CQUPT Student",
       ],
       typeSpeed: 150,
       backSpeed: 150,
@@ -87,7 +89,7 @@ export default function Home() {
             <div className="co-right ">
               {/* <span className="titleBox-tag">HI MY NEW FRIEND!</span> */}
               <h3>Hello, It’s Me</h3>
-              <h1>Call Me Ruhangs</h1>
+              <h1>Call Me {profileInfo.nickname}</h1>
               <h3><span>And I’m a</span> <i ref={textRef}></i></h3>
               {/* href="#next-one" */}
               <i className="buttom navbtn" onClick={goToLrean}> 了解一下
@@ -102,18 +104,18 @@ export default function Home() {
               <div className="mecar-title">
                 <div className="me-image">
                   <span className="status">
-                    <i>努力奋斗</i>
+                    <i>努力!!!</i>
                   </span>
                   <img src="./img/toux.jpg" alt="" />
                 </div>
-                <h3>阮同学</h3>
+                <h3>{profileInfo.name}</h3>
                 <p className="me-hover">
-                  <span>每天进步一点点！</span>
+                  <span>{profileInfo.introduction}</span>
                 </p>
               </div>
               <div className="borderbotm"></div>
               <div className="lianxi-list">
-                <a title="wx:w1457321681">
+                <a title={`wx:${profileInfo.weixin}`}>
                   <svg t="1649145899448" className="icon" viewBox="0 0 1024 1024" version="1.1"
                     xmlns="http://www.w3.org/2000/svg" p-id="14861" width="15" height="15">
                     <path
@@ -121,7 +123,7 @@ export default function Home() {
                       p-id="14862"></path>
                   </svg>
                 </a>
-                <a title="github:wttAndroid" href="https://gitee.com/wttAndroid">
+                <a title="github:ruhangs" href="https://github.com/Ruhangs">
                   <svg t="1649145950732" className="icon" viewBox="0 0 1024 1024" version="1.1"
                     xmlns="http://www.w3.org/2000/svg" p-id="16367" width="15" height="15">
                     <path
@@ -132,7 +134,7 @@ export default function Home() {
                       fill="#172B4D" p-id="16369"></path>
                   </svg>
                 </a>
-                <a title="email:1457321681@qq.com" href="Mailto:1457321681@qq.com?Subject=邮箱标题&amp;Body=邮箱内容！">
+                <a title={`email:${profileInfo.email}`} href={`Mailto:${profileInfo.email}?Subject=邮箱标题&amp;Body=邮箱内容！`}>
                   <svg t="1649145973361" className="icon" viewBox="0 0 1024 1024" version="1.1"
                     xmlns="http://www.w3.org/2000/svg" p-id="17271" width="15" height="15">
                     <path
@@ -140,7 +142,7 @@ export default function Home() {
                       p-id="17272"></path>
                   </svg>
                 </a>
-                <a title="QQ:1457321681">
+                <a title={`QQ:${profileInfo.qq}`}>
                   <svg t="1649146096754" className="icon" viewBox="0 0 1024 1024" version="1.1"
                     xmlns="http://www.w3.org/2000/svg" p-id="18277" width="15" height="15">
                     <path
@@ -153,40 +155,39 @@ export default function Home() {
               <div className="mecar-bottm">
                 <div>
                   <span className="mecarbottm-key">毕业院校</span>
-                  <span className="mecarbottm-value">重庆邮电大学</span>
+                  <span className="mecarbottm-value">{profileInfo.university}</span>
                 </div>
                 <div>
                   <span className="mecarbottm-key">所在城市</span>
-                  <span className="mecarbottm-value">重庆 渝北</span>
+                  <span className="mecarbottm-value">{profileInfo.hometown}</span>
                 </div>
                 <div>
                   <span className="mecarbottm-key">年级</span>
-                  <span className="mecarbottm-value">24届毕业生</span>
+                  <span className="mecarbottm-value">{profileInfo.grade}</span>
                 </div>
 
               </div>
               <div className="borderbotm"></div>
               <div className="buttom-box ">
-                <a className="button" href="Mailto:1457321681@qq.com?Subject=邮箱标题&amp;Body=邮箱内容！">联系我</a>
+                <a className="button" href={`Mailto:${profileInfo.email}?Subject=邮箱标题&amp;Body=邮箱内容！`}>联系我</a>
               </div>
             </div>
           </div>
           {/* <!-- 右边 --> */}
           <div className="co-right" id="lrean"  >
-            {/* <!-- 完成项目 --> */}
             <div className={"content-li" + " " + "li1" + " " + styles.li1Layout}>
               <div className={styles.li1Box + ' ' + 'borderbefore'}>
-                <span>15</span>
+                <span>{blogs.length}</span>
                 <div className="borderbotm"></div>
                 <p>文   章</p>
               </div>
               <div className={styles.li1Box + ' ' + 'borderbefore'}>
-                <span>3</span>
+                <span>{projects.length}</span>
                 <div className="borderbotm"></div>
                 <p>项   目</p>
               </div>
               <div className={styles.li1Box + ' ' + 'borderbefore'}>
-                <span>5</span>
+                <span>{visitCount}</span>
                 <div className="borderbotm"></div>
                 <p>访   客</p>
               </div>
@@ -199,53 +200,7 @@ export default function Home() {
                 <span>01</span>
               </h3>
               <div className={styles.li4Box}>
-                <div className="carbox">
-                  <svg t="1649230330671" className="icon" viewBox="0 0 1024 1024" version="1.1"
-                    xmlns="http://www.w3.org/2000/svg" p-id="1638" width="40" height="40">
-                    <path
-                      d="M488.96 506.88h40.96v307.2h-40.96zM803.84 737.28h-97.28c-45.056 0-81.92-36.864-81.92-81.92V502.272h40.96V655.36c0 22.528 18.432 40.96 40.96 40.96h97.28v40.96zM312.32 737.28H215.04v-40.96h97.28c22.528 0 40.96-18.432 40.96-40.96V502.272h40.96V655.36c0 45.056-36.864 81.92-81.92 81.92z"
-                      fill="#254665" p-id="1639"></path>
-                    <path
-                      d="M509.44 942.08c-46.592 0-84.48-37.888-84.48-84.48S462.848 773.12 509.44 773.12s84.48 37.888 84.48 84.48-37.888 84.48-84.48 84.48z m0-128c-24.064 0-43.52 19.456-43.52 43.52s19.456 43.52 43.52 43.52 43.52-19.456 43.52-43.52-19.456-43.52-43.52-43.52zM171.52 798.72c-46.592 0-84.48-37.888-84.48-84.48S124.928 629.76 171.52 629.76 256 667.648 256 714.24 218.112 798.72 171.52 798.72z m0-128c-24.064 0-43.52 19.456-43.52 43.52s19.456 43.52 43.52 43.52 43.52-19.456 43.52-43.52-19.456-43.52-43.52-43.52zM847.36 798.72c-46.592 0-84.48-37.888-84.48-84.48s37.888-84.48 84.48-84.48 84.48 37.888 84.48 84.48-37.888 84.48-84.48 84.48z m0-128c-24.064 0-43.52 19.456-43.52 43.52s19.456 43.52 43.52 43.52 43.52-19.456 43.52-43.52-19.456-43.52-43.52-43.52z"
-                      fill="#254665" p-id="1640"></path>
-                    <path
-                      d="M683.52 543.232H319.488c-90.112 0-163.328-73.216-163.328-163.328 0-90.112 73.216-163.328 163.328-163.328h7.68C344.064 138.752 413.696 81.92 495.616 81.92c69.632 0 132.608 42.496 159.232 105.472 9.728-1.536 19.456-2.56 29.184-2.56 98.816 0 179.2 80.384 179.2 179.2-0.512 98.816-80.896 179.2-179.712 179.2zM319.488 258.048c-67.584 0-122.368 54.784-122.368 122.368s54.784 122.368 122.368 122.368h364.544c76.288 0 138.24-61.952 138.24-138.24s-61.952-138.24-138.24-138.24c-12.288 0-24.576 1.536-36.864 5.12l-19.456 5.12-5.632-18.944C605.696 161.792 553.472 122.88 495.616 122.88c-68.096 0-124.416 51.2-131.584 118.784l-2.048 22.016-21.504-3.584c-7.168-1.536-14.336-2.048-20.992-2.048z"
-                      fill="#254665" p-id="1641"></path>
-                    <path
-                      d="M655.36 640H307.2V424.96c0-33.792 27.648-61.44 61.44-61.44h348.16v215.04c0 33.792-27.648 61.44-61.44 61.44z"
-                      fill="#254665" opacity=".18" p-id="1642"></path>
-                  </svg>
-                  <h4>UI设计</h4>
-                  <p>
-                    UI排版<br />
-                    响应式页面<br />
-                    静态页面、动画效果<br />
-                  </p>
-                  <a>ORDER NOW</a>
-                </div>
-                <div className="carbox">
-                  <svg t="1649230368898" className="icon" viewBox="0 0 1024 1024" version="1.1"
-                    xmlns="http://www.w3.org/2000/svg" p-id="1847" width="40" height="40">
-                    <path
-                      d="M153.6 460.8h-40.96V179.2c0-45.056 34.816-81.92 78.336-81.92H921.6v230.4h-40.96V138.24H190.976c-20.48 0-37.376 18.432-37.376 40.96v281.6zM843.776 783.36H112.64v-216.064h40.96V742.4h690.176c20.48 0 37.376-18.432 37.376-40.96v-141.824h40.96V701.44c-0.512 45.056-35.328 81.92-78.336 81.92zM220.16 885.76h593.92v40.96H220.16z"
-                      fill="#333333" p-id="1848"></path>
-                    <path
-                      d="M418.304 388.096l17.408 83.968 27.648-83.968H481.28l24.576 82.432 16.384-82.432h36.864l-27.648 130.048h-39.424L470.528 455.68 450.56 518.144h-39.424l-29.696-130.048h36.864zM611.328 388.096l17.408 83.968 27.648-83.968h17.92l24.576 82.432 16.384-82.432h36.864l-27.648 130.048h-39.424L663.552 455.68l-19.968 62.464H604.16l-29.696-130.048h36.864zM804.352 388.096l17.408 83.968 27.648-83.968h17.92l24.576 82.432 16.384-82.432h36.864l-27.648 130.048h-39.424L856.576 455.68l-19.968 62.464h-39.424l-29.696-130.048h36.864z"
-                      fill="#EB4446" p-id="1849"></path>
-                    <path
-                      d="M839.168 445.44h-512V179.2c0-33.792 27.648-61.44 61.44-61.44h512v266.24c0 33.792-27.648 61.44-61.44 61.44z"
-                      fill="#333333" opacity=".18" p-id="1850"></path>
-                    <path d="M496.64 762.88h40.96v143.36h-40.96z" fill="#333333" p-id="1851"></path>
-                  </svg>
-                  <h4>网页制作</h4>
-                  <p>
-                    HTML、JS、css、scss<br />
-                    JS交互<br />
-                    AJAX数据渲染<br />
-                  </p>
-                  <a>ORDER NOW</a>
-                </div>
-                <div className="carbox">
+                <div className="carbox" >
                   <svg t="1649230380175" className="icon" viewBox="0 0 1024 1024" version="1.1"
                     xmlns="http://www.w3.org/2000/svg" p-id="2002" width="40" height="40">
                     <path
@@ -262,14 +217,18 @@ export default function Home() {
                       fill="#333333" opacity=".18" p-id="2007"></path>
                   </svg>
                   <h4>前端</h4>
-                  <p>
-                    vue框架<br />
-                    UI框架<br />
-                    uniapp小程序
-                  </p>
+                  {
+                    techs.map((tech) => (
+                      <p key={tech.id}>
+                        {
+                          tech.attributes.type === 'frontend' ? <span>{tech.attributes.name} <i>{tech.attributes.desc}</i></span> : null
+                        }
+                      </p>
+                    ))
+                  }
                   <a>ORDER NOW</a>
                 </div>
-                <div className="carbox">
+                <div className="carbox" >
                   <svg t="1649230391217" className="icon" viewBox="0 0 1024 1024" version="1.1"
                     xmlns="http://www.w3.org/2000/svg" p-id="2160" width="40" height="40">
                     <path
@@ -284,90 +243,144 @@ export default function Home() {
                       fill="#333333" opacity=".18" p-id="2164"></path>
                   </svg>
                   <h4>后端</h4>
-                  <p>
-                    nodjes+express+mysql<br />
-                    koa<br />
-                    socket<br />
-                  </p>
+                  {
+                    techs.map((tech) => (
+                      <p key={tech.id}>
+                        {
+                          tech.attributes.type === 'backend' ? <span>{tech.attributes.name} <i>{tech.attributes.desc}</i></span> : null
+                        }
+                      </p>
+                    ))
+                  }
                   <a>ORDER NOW</a>
                 </div>
               </div>
             </div>
-            {/* <!-- 最近完成 --> */}
             <div className="content-li li6">
               <h3>
-                <span>个人项目
+                <span>最新项目
                 </span>
                 <div className="borderbotm"></div>
                 <span>02</span>
               </h3>
               <div className={styles.li6Box}>
-                <div className="carbox">
-                  <a className={styles.imgbox} href="http://123.56.144.92/nav/index.html">
-                    <img src=" ./img/project/daohanglan.png" alt="" />
-                  </a>
-                  <div className={styles.li6carTitle}>
-                    导航栏:基本实现:ul/li/a:hover
-                    <br /><br />2022.03.25
-                    <div className="borderbotm"></div>
-                    <a href="http://123.56.144.92/nav/index.html">进入浏览</a>
-                  </div>
-                </div>
-                <div className=" carbox">
-                  <a className={styles.imgbox} href="http://123.56.144.92/hualang/index.html">
-                    <img src="./img/project/hualang.png" alt="" />
-                  </a>
-                  <div className={styles.li6carTitle}>
-                    画廊海报：基本实现:iframe/a/marquee
-                    <br />2022.03.18
-                    <div className="borderbotm"></div>
-                    <a href="http://123.56.144.92/hualang/index.html">进入浏览</a>
-                  </div>
-                </div>
-                <div className="carbox">
-                  <a className={styles.imgbox} href="http://123.56.144.92/jianli/index.html">
-                    <img src="./img/project/jianli.png" alt="" />
-                  </a>
-                  <div className={styles.li6carTitle}>
-                    个人简历:animation+粒子
-                    <br />2022.03.10
-                    <div className="borderbotm"></div>
-                    <a href="http://123.56.144.92/jianli/index.html">进入浏览</a>
-                  </div>
-                </div>
+                {
+                  hotProjects.map((project) => (
+                    <div className=" carbox" key={project.id}>
+                      <a className={styles.imgbox} href={project.attributes.address}>
+                        <img src="./img/project/hualang.png" alt="" />
+                      </a>
+                      <div className={styles.li6carTitle}>
+                        {`${project.attributes.name}：${project.attributes.abstract}`}
+                        <br />{dayjs(project.attributes.updatedAt).format("YYYY.MM.DD")}
+                        <div className="borderbotm"></div>
+                        <a href={project.attributes.address}>进入浏览</a>
+                      </div>
+                    </div>
+                  ))
+                }
+
               </div>
             </div>
-            <div className="content-li li5">
+            <div className="content-li li3">
               <h3>
                 <span>近期文章</span>
                 <div className="borderbotm"></div>
                 <span>03</span>
               </h3>
-              <div className={styles.li5Box}>
-                <div className={styles.li5boxUl} id="li5boxul">
-                  <div className={styles.li5boxCar + " " + 'carbox'} >
-                    <img src="./img/toux.jpg" alt="" />
-                    <h3>张老师</h3>
-                    <span>Android</span>
-                    <p>
-                      我业精于勤而荒于嬉，行成于思而毁于随。
-                    </p>
-                  </div>
-                  <div className={styles.li5boxCar + " " + 'carbox'}>
-                    <img src="./img/toux.jpg" alt="" />
-                    <h3>史老师</h3>
-                    <span>web前端开发</span>
-                    <p>
-                      青，取之于蓝而青于蓝;
-                      冰，水为之而寒于水。
-                    </p>
-                  </div>
-                </div>
-              </div>
+              {
+                blogLasted.map((blog) => {
+                  return (
+                    <Link className={`carbox ${styles.li3Box}`} key={blog.id} href={`Blog/detail/${blog.id}`}>
+                      <h3 style={{ margin: "auto" }}>{blog.attributes.title}</h3>
+                      <p>摘要：computed具有缓存功能，计算结果(data依赖数据)发生变化时才会被调用；(结果相同即使多次调用也只执行一次)
+                        methods页面加载调用一次，主动触发就调用(只执行逻辑代码)
+                      </p>
+                      <div className={styles.addressWrap}>
+                        <div className={styles.addressLeft}>
+                          <span>{blog.attributes.group}</span>
+                          <span>踩坑</span>
+                        </div>
+                        <div className={styles.addressRight}>
+                          {/* 点赞功能 */}
+                          <span>
+                            <svg t="1663167559418" className="icon" viewBox="0 0 1024 1024" version="1.1"
+                              xmlns="http://www.w3.org/2000/svg" p-id="8282" width="20" height="20">
+                              <path
+                                d="M857.28 344.992h-264.832c12.576-44.256 18.944-83.584 18.944-118.208 0-78.56-71.808-153.792-140.544-143.808-60.608 8.8-89.536 59.904-89.536 125.536v59.296c0 76.064-58.208 140.928-132.224 148.064l-117.728-0.192A67.36 67.36 0 0 0 64 483.04V872c0 37.216 30.144 67.36 67.36 67.36h652.192a102.72 102.72 0 0 0 100.928-83.584l73.728-388.96a102.72 102.72 0 0 0-100.928-121.824zM128 872V483.04c0-1.856 1.504-3.36 3.36-3.36H208v395.68H131.36A3.36 3.36 0 0 1 128 872z m767.328-417.088l-73.728 388.96a38.72 38.72 0 0 1-38.048 31.488H272V476.864a213.312 213.312 0 0 0 173.312-209.088V208.512c0-37.568 12.064-58.912 34.72-62.176 27.04-3.936 67.36 38.336 67.36 80.48 0 37.312-9.504 84-28.864 139.712a32 32 0 0 0 30.24 42.496h308.512a38.72 38.72 0 0 1 38.048 45.888z"
+                                p-id="8283"></path>
+                            </svg>
+                            1
+                          </span>
+
+                          <svg t="1663149212139" className="icon" viewBox="0 0 1024 1024" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" p-id="1979" width="20" height="20">
+                            <path
+                              d="M192 512a320 320 0 1 1 640 0 320 320 0 0 1-640 0zM512 128a384 384 0 1 0 0 768 384 384 0 0 0 0-768z m21.333333 224a32 32 0 0 0-64 0V554.666667h202.666667a32 32 0 0 0 0-64H533.333333V352z"
+                              fill="#222222" p-id="1980"></path>
+                          </svg>
+                          <span>{dayjs(blog.attributes.publishedAt).format('YYYY-MM-DD hh:mm:ss')}</span>
+                        </div>
+                      </div>
+                    </Link>
+                  )
+                })
+
+              }
             </div>
           </div>
         </div>
       </div>
     </>
   )
+}
+
+
+export async function getStaticProps() {
+  const profileInfo = await getProfile().then((res) => {
+    return res.data
+  })
+  const blogs = await getBlogList().then((res) => {
+    return res.data
+  })
+
+  const blogLasted = blogs.sort((a, b) => {
+    return a.attributes.updatedAt - b.attributes.updatedAt
+  }).slice(0, 4);
+
+  const projects = await getProjectList().then((res) => {
+    return res.data
+  })
+
+  const hotProjects = projects.sort((a, b) => {
+    return a.attributes.updatedAt - b.attributes.updatedAt
+  }).slice(0,2)
+
+  const techs = await getTechList().then((res) => {
+    return res.data
+  })
+
+  const visitCount = await getVisitCount().then((res) => {
+    return res.data.attributes.count
+  })
+
+  // updateVisitCount({ count: Number(visitCount) + 1 }).then((res, req) => {
+  //   console.log("success")
+  // }).catch(() => {
+  //   console.log("fail")
+  // })
+
+
+
+  return {
+    props: {
+      profileInfo,
+      blogs,
+      blogLasted,
+      projects,
+      hotProjects,
+      techs,
+      visitCount
+    }
+  }
 }

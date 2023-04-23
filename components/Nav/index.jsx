@@ -15,7 +15,7 @@ export default function Nav(props) {
     let root = document.querySelector(':root')
     let radio = document.querySelector('#myRadio')
     if (state && state === true) {
-      radio.classList.remove('active')
+      radio.classList.add('active')
       root.style.setProperty('--backColor', '#fff')
       root.style.setProperty('--borderline', '#fff')
       root.style.setProperty('--headerCOlor', '#fff')
@@ -29,16 +29,16 @@ export default function Nav(props) {
       root.style.setProperty('--colorFont2', '#222')
       root.style.setProperty('--colorFont3', '#444')
     } else {
-      radio.classList.add('active')
+      radio.classList.remove('active')
       root.style.setProperty('--backColor', '#fff')
       root.style.setProperty('--borderline', '#1d1d1d')
-      root.style.setProperty('--headerCOlor', '#1d1d1d')
+      root.style.setProperty('--headerCOlor', '#222')
       root.style.setProperty('--headerhover', 'rgba(0, 0, 0, 0.9)')
-      root.style.setProperty('--headerFont', '#fff')
+      root.style.setProperty('--headerFont', '#eee')
       root.style.setProperty('--fontColor', '#000')
       root.style.setProperty('--mainColor', '#f4ba1d')
-      root.style.setProperty('--bagColor', '#0e0e0e')
-      root.style.setProperty('--codeColor', '#8b9273')
+      root.style.setProperty('--bagColor', '#1a1a1a')
+      root.style.setProperty('--codeColor', '#e7f6b5cc')
       root.style.setProperty('--colorFont1', '#fff')
       root.style.setProperty('--colorFont2', '#ddd')
       root.style.setProperty('--colorFont3', '#aaa')
@@ -99,8 +99,8 @@ export default function Nav(props) {
               {/* <!-- 栏目 --> */}
               <ul className="header-nav" id='nav' >
                 <li className={router.pathname === '/' ? "active" : ""}><Link href={"/"}>Home</Link></li>
-                <li className={router.pathname === '/Blog/index' ? "active" : ""}><Link href={"/Blog/index"}>Blog</Link></li>
-                <li className={router.pathname === '/Note/index' ? "active" : ""}><Link href={"/Note/index"}>Note</Link></li>
+                <li className={router.pathname === '/Blog' ? "active" : ""}><Link href={"/Blog"}>Blog</Link></li>
+                <li className={router.pathname === '/Note/1' ? "active" : ""}><Link href={"/Note/1"}>Note</Link></li>
                 <li className={router.pathname === '/Project' ? "active" : ""}><Link href={"/Project"}>Project</Link></li>
               </ul>
               {/* <!-- 开关灯 --> */}

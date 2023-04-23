@@ -1,24 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Head from 'next/head'
-import Nav from '@/components/Nav'
 import styles from './index.module.css'
+import Link from 'next/link'
+import dedupe from 'dedupe'
+import dayjs from 'dayjs'
+import { getBlogList, getProjectList } from '../api/request'
 
-export default function Blog() {
+export default function Blog({ projects }) {
+  console.log(projects)
+
   return (
     <div>
       <Head>
-          <title>项目</title>
+        <title>项目</title>
       </Head>
-      {/* <!-- 顶部导航 --> */}
       <div className="navigation">
         <div className="nav-titleBox co zz">
-          {/* <!-- 标题 --> */}
           <div className="co-right">
-            <span className="titleBox-tag">Photo!</span>
-            <h1 style={{margin: 0}}>
-              life is like a box of chocolates .
+            <span className="titleBox-tag">PORTFOLIO!</span>
+            <h1 style={{ margin: 0 }}>
+              Great minds have purpose
             </h1>
-            <a className="buttom navbtn" href="#next-one">生活就像巧克力
+            <a className="buttom navbtn" href="#next-one" style={{marginTop: "2rem"}}>了解一下这些项目吧
             </a>
           </div>
         </div>
@@ -28,67 +31,47 @@ export default function Blog() {
       <div className={styles.content + ' ' + "content zz"}>
         {/* <!-- 主要内容部分 --> */}
         <div id="next-one">
-          <div className={"content-li" + " " + "li1" + " " + styles.li1Layout}>
-            <div className={styles.li1Box + ' ' + "borderbefore"}>
-              <span>Sports</span>
-              <span className={styles.tag}>25</span>
-              <div className="borderbotm"></div>
-              <p>运动</p>
-            </div>
-            <div className={styles.li1Box + ' ' + "borderbefore"}>
-              <span>Foot</span><span className={styles.tag}>5</span>
-              <div className="borderbotm"></div>
-              <p>美食</p>
-            </div>
-            <div className={styles.li1Box + ' ' + "borderbefore"}>
-              <span>Travel</span><span className={styles.tag}>18</span>
-              <div className="borderbotm"></div>
-              <p>旅行</p>
-            </div>
-          </div>
-          <div className="content-li li2">
+          <div className="content-li li2" >
             <h3>
-              <span>生活精彩瞬间</span>
-              <div className="borderbotm"></div>
-              <span>02</span>
+              <div className="borderbotm" style={{opacity: 0}}></div>
+              <apsn className={styles.intro}>一些开源实践，练手项目，欢迎使用与贡献</apsn>
+              <div className="borderbotm" style={{opacity: 0}}></div>
             </h3>
-            <div className={styles.li2Box}>
-              <a className={styles.li2BoxItem  + ' ' +  "carbox"}>
-                <img src="./img/pic1.jpg" alt="" />
-                <div className={styles.boxitemTitle}>
-                  <h6>精彩瞬间</h6>
-                  <span>地点：山西 晋城</span>
-                </div>
-              </a>
-              <a className={styles.li2BoxItem  + ' ' +  "carbox"} href="https://gitee.com/wttAndroid/book_admin">
-                <img src="./img/pic3.jpg" alt="" />
-                <div className={styles.boxitemTitle}>
-                  <h6>精彩瞬间</h6>
-                  <span>地点：山西 晋城</span>
-                </div>
-              </a>
-              <a className={styles.li2BoxItem  + ' ' +  "carbox"} href="https://wttandroid.gitee.io/wttandroid.github.io/">
-                <img src="./img/timg2.gif" alt="" />
-                <div className={styles.boxitemTitle}>
-                  <h6>河南 影视城</h6>
-                  <span>地点：河南 影视城</span>
-                </div>
-              </a>
-              <a className={styles.li2BoxItem  + ' ' +  "carbox"} href="https://gitee.com/wttAndroid/xyy_server">
-                <img src="./img/box4.gif" alt="" />
-                <div className={styles.boxitemTitle}>
-                  <h6>洛阳牡丹</h6>
-                  <span>地点：洛阳 牡丹园</span>
-                </div>
-              </a>
+            <div className={styles.li2Box} >
+              {
+                projects.map((project) => (
+
+                  <Link className={styles.li2BoxItem + ' ' + "carbox"} href={project.attributes.address} key={project.id}>
+                    <img src="./img/pic1.jpg" alt="" />
+                    <div className={styles.boxitemTitle}>
+                      <h6>{project.attributes.name}</h6>
+                      <span>{project.attributes.abstract}</span>
+                    </div>
+                  </Link>
+
+                ))
+              }
             </div>
           </div>
           <div className="borderbotm"></div>
           <div className="carbox copybottm">
-            ©2022 wttandroid
+            ©2023 Ruhangs
           </div>
         </div>
       </div>
     </div>
   )
+}
+
+
+export async function getStaticProps({ params }) {
+  const projects = await getProjectList().then((res) => {
+    return res.data
+  })
+
+  return {
+    props: {
+      projects
+    }
+  }
 }

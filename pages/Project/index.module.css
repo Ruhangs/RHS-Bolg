@@ -1,66 +1,23 @@
 .content {
   display: block;
-  top: -90px;
-  min-height: 1000px;
-  width: 85%;
+  top: -170px;
+  min-height: 500px;
+  width: 80%;
   margin: 0 auto;
-}
-
-.li1Layout {
-  display: flex;
-  justify-content: space-between;
-}
-
-.li1Layout>.li1Box {
-  position: relative;
-  flex: 0 0 32%;
-  background-color: var(--headerCOlor);
-  min-height: 150px;
-  text-align: center;
-  border-radius: 10px;
-  padding: 30px 20px;
-  box-sizing: border-box;
-
-}
-
-.li1Box>span {
-  font-size: 24px;
-  font-weight: 900;
-  color: var(--headerFont);
-  line-height: 20px;
-  display: inline-block;
-}
-
-.li1Box>span.tag {
-  border-radius: 10px;
-  padding: 0px 10px;
-  margin-left: 5px;
-  font-size: 18px;
-  background-color: var(--mainColor);
-}
-
-.li1Box>p {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--headerFont);
-  transition: .4s ease-in-out;
-  margin: 0px
 }
 
 .li2Box {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: start;
 }
 
 .li2BoxItem {
   overflow: hidden;
-  flex: 0 0 30%;
+  flex: 0 0 24%;
   position: relative;
-  /* min-height: 300px; */
-  margin-bottom: 40px;
-  height: 180px;
+  margin: 0.3%;
+  height: 30rem;
 }
 
 .li2BoxItem:hover img {
@@ -70,22 +27,20 @@
 .li2BoxItem:hover .boxitemTitle {
   bottom: 0px;
   opacity: 1;
-  transform: scale(1.2);
 }
 
 .li2BoxItem>img {
   width: 100%;
-  /* height: 100%; */
   transform: scale(1.1);
   transition: all .3s ease-in-out;
 }
 
 .li2BoxItem .boxitemTitle {
   position: absolute;
-  bottom: -75px;
+  bottom: -10rem;
   left: 0px;
   right: 0px;
-  height: 75px;
+  height: 10rem;
   text-align: center;
   background-color: var(--headerhover);
   color: var(--headerFont);
@@ -95,9 +50,8 @@
 }
 
 .boxitemTitle h6 {
-  font-size: 12px;
-  /* display: inline-block; */
-  margin: 15px 0 8px;
+  font-size: 1.3rem;
+  margin: 0.5rem 0;
 }
 
 .contentLi.li1 {
@@ -116,9 +70,17 @@
   box-sizing: border-box;
 }
 
+.intro{
+  font-size: 2rem;
+  color: var(--mainColor);
+}
+
 
 /* 手机*/
 @media screen and (max-width: 550px) {
+  .content {
+    top: -150px;
+  }
   .content-li {
     display: block;
   }
@@ -139,5 +101,17 @@
   .li2BoxItem {
     flex: 100%;
     min-height: auto;
+  }
+
+  .li2BoxItem .boxitemTitle {
+    bottom: 0;
+    height: 10rem;
+  }
+
+  .intro{
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--mainColor);
   }
 }

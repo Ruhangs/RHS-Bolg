@@ -7,7 +7,7 @@
   --fontColor: #fff;
   --mainColor: #f4ba1d;
   --bagColor: #f4f5f7;
-  --color-canvas-default: #0e0e0e;F
+  --color-canvas-default: #0e0e0e;
   --color-fg-default: #fff;
   --color-canvas-subtle: #f6ffcf;
 } */
@@ -16,13 +16,13 @@
   :root {
     --backColor: #fff;
     --borderline: #1d1d1d;
-    --headerCOlor: #1d1d1d;
+    --headerCOlor: #222;
     --headerhover: rgba(0, 0, 0, 0.9);
     --headerFont: #fff;
     --fontColor: #1d1d1d;
     --mainColor: #f4ba1d;
-    --bagColor: #0e0e0e;
-    --codeColor: #8b9273;
+    --bagColor: #1a1a1a;
+    --codeColor: #e7f6b5cc;
     --colorFont1: #fff;
     --colorFont2: #ddd;
     --colorFont3: #aaa;
@@ -97,7 +97,7 @@ pre code {
 } 
 
 .markdown-body p {
-  display: flex;
+  display: grid;
 }
 
 .markdown-body svg {
@@ -413,7 +413,7 @@ img {
 }
 
 .copybottm {
-  padding: 30px 20px;
+  padding: 15px 20px;
   color: #7B7B7D;
   font-size: 10px;
   font-weight: 700;
@@ -431,8 +431,7 @@ img {
   height: 70px;
   line-height: 70px;
   background-color: var(--headerCOlor);
-  /* border-radius: 0% 0% 10px 10px; */
-  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 15%);
+  box-shadow: 0 2px 4px 0 rgb(125 125 125 / 20%);
 }
 
 .goBack {
@@ -561,17 +560,12 @@ img {
 
 /* 默认主题 */
 .navigation {
-  /* margin: 0px auto 0; */
-  /* width: 95%; */
   background-color: transparent;
   height: 600px;
-  border-radius: 20px;
-  background-image: url("../public/banner.png");
-  /* background-attachment: fixed; */
+  background-image: radial-gradient(farthest-side at 90% 10%, var(--mainColor), #d3c525 , var(--bagColor));
   background-size: 100% !important;
   background-repeat: no-repeat;
   overflow: hidden;
-  /* color: #fff; */
 }
 
 .navigationText {
@@ -686,12 +680,12 @@ img {
 /* 左半部分 */
 .scroll {
   position: fixed !important;
-  top: 51%;
+  top: 420px;
 }
 
 .content .me-card {
   width: fit-content;
-  min-width: 285px;
+  min-width: 300px;
   transform: translateY(-350px);
   height: 700px;
   /* backgrounbad-color: var(--headerCOlor); */
@@ -932,6 +926,10 @@ img {
 /* 手机*/
 @media screen and (max-width: 950px) {
 
+  .markdown-body p {
+    display: flex;
+  }
+
   .goBack {
     visibility: hidden;
   }
@@ -1037,7 +1035,7 @@ img {
 /* 平板 */
 @media screen and (min-width: 701px) and (max-width:1200px) {
   .navigation {
-    height: 650px;
+    /* height: 650px; */
     text-align: center;
     background-size: 100% 100%;
     background-image: url("../public/banner2.png");
