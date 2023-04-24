@@ -48,7 +48,7 @@
 
 .left .noteList .link {
   display: block !important;
-  height: 2rem;
+  /* height: 2rem; */
   line-height: 2rem;
   padding: 1rem 0 1rem 1rem;
   font-size: 14px;
@@ -133,25 +133,34 @@
     width: 100%;
     height: 50rem;
     overflow-y: scroll;
-    background-color: #222;
+    background-color: var(--headerCOlor);
   }
 
   .left {
     position: absolute;
     width: 40%;
     padding: 2rem 0.5rem;
-    background-color: #222;
+    background-color: var(--headerCOlor);
+  }
+
+  .left .noteList {
+    margin: 0;
+    padding-top: 3rem;
+  }
+
+  .left .noteList .link {
+    padding: 0 0 1rem 0.5rem;
   }
 
   .left .block {
-    width: 10rem;
+    width: 78%;
   }
 
   .right {
     position: absolute;
     overflow-y: scroll;
     width: 60%;
-    background-color: #222;
+    background-color: var(--headerCOlor);
     
   }
 
