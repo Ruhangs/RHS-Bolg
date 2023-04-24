@@ -96,14 +96,18 @@ pre code {
   color: var(--mainColor);
 } 
 
-.markdown-body p {
+/* .markdown-body p {
   display: grid;
-}
+} */
 
 .markdown-body svg {
   margin: auto;
+  width: -webkit-fill-available;
 }
 
+.markdown-body img {
+  width: auto;
+}
 
 .markdown-body svg path:nth-child(3) {
   fill: var(--mainColor);
@@ -920,9 +924,9 @@ img {
 /* 手机*/
 @media screen and (max-width: 950px) {
 
-  .markdown-body p {
+  /* .markdown-body p {
     display: flex;
-  }
+  } */
 
   .goBack {
     visibility: hidden;
