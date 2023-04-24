@@ -14,6 +14,17 @@ export default function Nav(props) {
   useEffect(() => {
     let root = document.querySelector(':root')
     let radio = document.querySelector('#myRadio')
+    if (state === void(0)){
+      // console.log(window.matchMedia("(prefers-color-scheme: dark)"))
+      if(window.matchMedia("(prefers-color-scheme: dark)").matches){
+        console.log('dark')
+        setState(false)
+      }else{
+        console.log('light')
+        setState(true)
+      }
+      return
+    }
     if (state && state === true) {
       radio.classList.add('active')
       root.style.setProperty('--backColor', '#fff')
@@ -28,7 +39,7 @@ export default function Nav(props) {
       root.style.setProperty('--colorFont1', '#000')
       root.style.setProperty('--colorFont2', '#222')
       root.style.setProperty('--colorFont3', '#444')
-    } else {
+    }else  {
       radio.classList.remove('active')
       root.style.setProperty('--backColor', '#fff')
       root.style.setProperty('--borderline', '#1d1d1d')

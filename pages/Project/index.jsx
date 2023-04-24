@@ -34,7 +34,7 @@ export default function Blog({ projects }) {
           <div className="content-li li2" >
             <h3>
               <div className="borderbotm" style={{opacity: 0}}></div>
-              <apsn className={styles.intro}>一些开源实践，练手项目，欢迎使用与贡献</apsn>
+              <span className={styles.intro}>一些开源实践，练手项目，欢迎使用与贡献</span>
               <div className="borderbotm" style={{opacity: 0}}></div>
             </h3>
             <div className={styles.li2Box} >

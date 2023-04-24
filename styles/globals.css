@@ -657,7 +657,6 @@ img {
 .co-right {
   width: 64%;
   display: inline-block;
-  /* background-color: #45454566; */
   min-height: 50px;
 }
 
@@ -673,7 +672,6 @@ img {
   width: 85%;
   margin: 0 auto;
   display: flex;
-  /* background-color: rgba(10, 15, 20, 0.2); */
 }
 
 
@@ -706,12 +704,9 @@ img {
   margin: 0 auto;
   display: block;
   font: 14px;
-  /* border-right: .08em solid; */
-  /* 个数*2ch */
   width: 16ch;
   white-space: nowrap;
   overflow: hidden;
-  /* animation: typing 3s steps(16, end), blink-caret .3s step-end infinite alternate; */
 }
 
 
@@ -730,7 +725,6 @@ img {
 
 /* 虚线 */
 .content .borderbotm {
-  /* border-style: dashed; */
   border-bottom: 1px dashed rgb(187, 185, 185);
   height: 0px;
   margin: 35px 0;
@@ -1035,10 +1029,8 @@ img {
 /* 平板 */
 @media screen and (min-width: 701px) and (max-width:1200px) {
   .navigation {
-    /* height: 650px; */
     text-align: center;
     background-size: 100% 100%;
-    background-image: url("../public/banner2.png");
   }
 
   .co-left {
@@ -1063,5 +1055,6 @@ img {
 
   .scroll {
     position: relative !important;
+    top: 0;
   }
 }
