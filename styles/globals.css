@@ -1,17 +1,3 @@
-/* :root {
-  --backColor: #fff;
-  --borderline: #fff;
-  --headerCOlor: #fff;
-  --headerhover: rgba(0, 16, 23, 0.8);
-  --headerFont: #000;
-  --fontColor: #fff;
-  --mainColor: #f4ba1d;
-  --bagColor: #f4f5f7;
-  --color-canvas-default: #0e0e0e;
-  --color-fg-default: #fff;
-  --color-canvas-subtle: #f6ffcf;
-} */
-
 @media (prefers-color-scheme: dark) {
   :root {
     --backColor: #fff;
@@ -96,9 +82,9 @@ pre code {
   color: var(--mainColor);
 } 
 
-/* .markdown-body p {
-  display: grid;
-} */
+.markdown-body p {
+  display: block;
+}
 
 .markdown-body svg {
   margin: auto;

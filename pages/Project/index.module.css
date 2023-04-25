@@ -31,6 +31,7 @@
 
 .li2BoxItem>img {
   width: 100%;
+  object-fit: cover;
   transform: scale(1.1);
   transition: all .3s ease-in-out;
 }

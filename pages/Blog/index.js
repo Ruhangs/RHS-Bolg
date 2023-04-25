@@ -63,9 +63,9 @@ export default function Blog({ studies, works, lives, groups }) {
                     group === 'study' ? studies.map((item) => (
 
                       <Link className={styles.li2BoxItem + ' ' + "carbox"} href={`/Blog/detail/${item.id}`} key={item.id}>
-                        <img src={`http://47.115.201.17:1337/`} alt="" />
+                        <img src={`./cover.png`} alt="" />
                         <div className={styles.boxitemTitle}>
-                          <h6>{item.attributes.group}</h6>
+                          <h6>{item.attributes.title}</h6>
                           <span>发文时间：{dayjs(item.attributes.publishedAt).format("YYYY-MM-DD")}</span>
                         </div>
                       </Link>
@@ -73,9 +73,9 @@ export default function Blog({ studies, works, lives, groups }) {
                     )) : group === 'live' ? lives.map((item) => (
 
                       <Link className={styles.li2BoxItem + ' ' + "carbox"} href={`/Blog/detail/${item.id}`} key={item.id}>
-                        <img src="./img/pic1.jpg" alt="" />
+                        <img src={`./cover.png`} alt="" />
                         <div className={styles.boxitemTitle}>
-                          <h6>{item.attributes.group}</h6>
+                          <h6>{item.attributes.title}</h6>
                           <span>发文时间：{dayjs(item.attributes.publishedAt).format("YYYY-MM-DD")}</span>
                         </div>
 
@@ -84,9 +84,9 @@ export default function Blog({ studies, works, lives, groups }) {
                     )) : works.map((item) => (
 
                       <Link className={styles.li2BoxItem + ' ' + "carbox"} href={`/Blog/detail/${item.id}`} key={item.id}>
-                        <img src="./img/pic1.jpg" alt="" />
+                        <img src={`./cover.png`} alt="" />
                         <div className={styles.boxitemTitle}>
-                          <h6>{item.attributes.group}</h6>
+                          <h6>{item.attributes.title}</h6>
                           <span>发文时间：{dayjs(item.attributes.publishedAt).format("YYYY-MM-DD")}</span>
                         </div>
                       </Link>

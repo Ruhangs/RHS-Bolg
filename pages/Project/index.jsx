@@ -42,7 +42,7 @@ export default function Blog({ projects }) {
                 projects.map((project) => (
 
                   <Link className={styles.li2BoxItem + ' ' + "carbox"} href={project.attributes.address} key={project.id}>
-                    <img src="./img/pic1.jpg" alt="" />
+                    <img src={`./img/project/${project.attributes.cover}.png`} alt="" />
                     <div className={styles.boxitemTitle}>
                       <h6>{project.attributes.name}</h6>
                       <span>{project.attributes.abstract}</span>

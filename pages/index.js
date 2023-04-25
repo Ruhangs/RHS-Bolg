@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import Typed from 'typed.js'
-import { getProfile, getBlogList, getVisitCount, updateVisitCount, getProjectList, getTechList } from './api/request'
+import { getProfile, getBlogList, getVisitCount, updateVisitCount, getProjectList, getTechList, getNoteList } from './api/request'
 import Head from 'next/head'
 import dayjs from 'dayjs'
 import styles from '../styles/home.module.css'
 import Link from 'next/link'
 
-export default function Home({ profileInfo, blogs, blogLasted, projects, hotProjects, techs, visitCount }) {
+export default function Home({ profileInfo, blogs, blogLasted, projects, hotProjects, techs, notes }) {
   console.log(hotProjects)
   profileInfo = profileInfo.attributes
   const mycardRef = useRef("")
@@ -106,7 +106,7 @@ export default function Home({ profileInfo, blogs, blogLasted, projects, hotProj
                   <span className="status">
                     <i>努力!!!</i>
                   </span>
-                  <img src="./img/toux.jpg" alt="" />
+                  <img src="./avatar.jpg" alt="" />
                 </div>
                 <h3>{profileInfo.name}</h3>
                 <p className="me-hover">
@@ -187,9 +187,9 @@ export default function Home({ profileInfo, blogs, blogLasted, projects, hotProj
                 <p>项   目</p>
               </div>
               <div className={styles.li1Box + ' ' + 'borderbefore'}>
-                <span>{visitCount}</span>
+                <span>{notes.length}</span>
                 <div className="borderbotm"></div>
-                <p>访   客</p>
+                <p>笔 记</p>
               </div>
             </div>
 
@@ -268,7 +268,7 @@ export default function Home({ profileInfo, blogs, blogLasted, projects, hotProj
                   hotProjects.map((project) => (
                     <div className=" carbox" key={project.id}>
                       <a className={styles.imgbox} href={project.attributes.address}>
-                        <img src="./img/project/hualang.png" alt="" />
+                        <img src={`./img/project/${project.attributes.cover}.png`} alt="" />
                       </a>
                       <div className={styles.li6carTitle}>
                         {`${project.attributes.name}：${project.attributes.abstract}`}
@@ -293,17 +293,15 @@ export default function Home({ profileInfo, blogs, blogLasted, projects, hotProj
                   return (
                     <Link className={`carbox ${styles.li3Box}`} key={blog.id} href={`Blog/detail/${blog.id}`}>
                       <h3 style={{ margin: "auto" }}>{blog.attributes.title}</h3>
-                      <p>摘要：computed具有缓存功能，计算结果(data依赖数据)发生变化时才会被调用；(结果相同即使多次调用也只执行一次)
-                        methods页面加载调用一次，主动触发就调用(只执行逻辑代码)
+                      <p>摘要：{blog.attributes.abstract}
                       </p>
                       <div className={styles.addressWrap}>
                         <div className={styles.addressLeft}>
-                          <span>{blog.attributes.group}</span>
-                          <span>踩坑</span>
+                          <span>{blog.attributes.group === 'work' ? "工作" : blog.attributes.group === 'study' ? "学习" : "生活"} </span>
                         </div>
                         <div className={styles.addressRight}>
                           {/* 点赞功能 */}
-                          <span>
+                          {/* <span>
                             <svg t="1663167559418" className="icon" viewBox="0 0 1024 1024" version="1.1"
                               xmlns="http://www.w3.org/2000/svg" p-id="8282" width="20" height="20">
                               <path
@@ -311,7 +309,7 @@ export default function Home({ profileInfo, blogs, blogLasted, projects, hotProj
                                 p-id="8283"></path>
                             </svg>
                             1
-                          </span>
+                          </span> */}
 
                           <svg t="1663149212139" className="icon" viewBox="0 0 1024 1024" version="1.1"
                             xmlns="http://www.w3.org/2000/svg" p-id="1979" width="20" height="20">
@@ -353,16 +351,20 @@ export async function getStaticProps() {
   })
 
   const hotProjects = projects.sort((a, b) => {
-    return a.attributes.updatedAt - b.attributes.updatedAt
+    return b.attributes.updatedAt - a.attributes.updatedAt
   }).slice(0,2)
 
   const techs = await getTechList().then((res) => {
     return res.data
   })
 
-  const visitCount = await getVisitCount().then((res) => {
-    return res.data.attributes.count
+  const notes = await getNoteList().then((res) => {
+    return res.data
   })
+
+  // const visitCount = await getVisitCount().then((res) => {
+  //   return res.data.attributes.count
+  // })
 
   // updateVisitCount({ count: Number(visitCount) + 1 }).then((res, req) => {
   //   console.log("success")
@@ -380,7 +382,7 @@ export async function getStaticProps() {
       projects,
       hotProjects,
       techs,
-      visitCount
+      notes
     }
   }
 }
