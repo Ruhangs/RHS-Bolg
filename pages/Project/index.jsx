@@ -4,7 +4,8 @@ import styles from './index.module.css'
 import Link from 'next/link'
 import dedupe from 'dedupe'
 import dayjs from 'dayjs'
-import { getBlogList, getProjectList } from '../api/request'
+import { getProjectList } from '../api/request'
+import { handelrImgUrl } from '@/util/tool'
 
 export default function Blog({ projects }) {
   console.log(projects)
@@ -42,7 +43,7 @@ export default function Blog({ projects }) {
                 projects.map((project) => (
 
                   <Link className={styles.li2BoxItem + ' ' + "carbox"} href={project.attributes.address} key={project.id}>
-                    <img src={`./img/project/${project.attributes.cover}.png`} alt="" />
+                    <img src={handelrImgUrl(project.attributes.cover)} alt="" />
                     <div className={styles.boxitemTitle}>
                       <h6>{project.attributes.name}</h6>
                       <span>{project.attributes.abstract}</span>

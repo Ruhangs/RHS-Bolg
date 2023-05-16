@@ -5,8 +5,10 @@ import Link from 'next/link'
 import dedupe from 'dedupe'
 import dayjs from 'dayjs'
 import { getBlogList } from '../api/request'
+import { handelrImgUrl } from '../../util/tool'
 
 export default function Blog({ studies, works, lives, groups }) {
+  console.log(studies);
 
   return (
     <div>
@@ -63,7 +65,7 @@ export default function Blog({ studies, works, lives, groups }) {
                     group === 'study' ? studies.map((item) => (
 
                       <Link className={styles.li2BoxItem + ' ' + "carbox"} href={`/Blog/detail/${item.id}`} key={item.id}>
-                        <img src={`./cover.png`} alt="" />
+                        <img src={handelrImgUrl(item.attributes.link)} alt="" />
                         <div className={styles.boxitemTitle}>
                           <h6>{item.attributes.title}</h6>
                           <span>发文时间：{dayjs(item.attributes.publishedAt).format("YYYY-MM-DD")}</span>
@@ -73,7 +75,7 @@ export default function Blog({ studies, works, lives, groups }) {
                     )) : group === 'live' ? lives.map((item) => (
 
                       <Link className={styles.li2BoxItem + ' ' + "carbox"} href={`/Blog/detail/${item.id}`} key={item.id}>
-                        <img src={`./cover.png`} alt="" />
+                        <img src={handelrImgUrl(item.attributes.link)} alt="" />
                         <div className={styles.boxitemTitle}>
                           <h6>{item.attributes.title}</h6>
                           <span>发文时间：{dayjs(item.attributes.publishedAt).format("YYYY-MM-DD")}</span>
@@ -84,7 +86,7 @@ export default function Blog({ studies, works, lives, groups }) {
                     )) : works.map((item) => (
 
                       <Link className={styles.li2BoxItem + ' ' + "carbox"} href={`/Blog/detail/${item.id}`} key={item.id}>
-                        <img src={`./cover.png`} alt="" />
+                        <img src={handelrImgUrl(item.attributes.link)} alt="" />
                         <div className={styles.boxitemTitle}>
                           <h6>{item.attributes.title}</h6>
                           <span>发文时间：{dayjs(item.attributes.publishedAt).format("YYYY-MM-DD")}</span>

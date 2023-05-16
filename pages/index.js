@@ -5,9 +5,9 @@ import Head from 'next/head'
 import dayjs from 'dayjs'
 import styles from '../styles/home.module.css'
 import Link from 'next/link'
+import { handelrImgUrl } from '../util/tool'
 
 export default function Home({ profileInfo, blogs, blogLasted, projects, hotProjects, techs, notes }) {
-  console.log(hotProjects)
   profileInfo = profileInfo.attributes
   const mycardRef = useRef("")
   const lreanRef = useRef("")
@@ -106,7 +106,7 @@ export default function Home({ profileInfo, blogs, blogLasted, projects, hotProj
                   <span className="status">
                     <i>努力!!!</i>
                   </span>
-                  <img src="./avatar.jpg" alt="" />
+                  <img src={handelrImgUrl(profileInfo.avatar)} alt="" />
                 </div>
                 <h3>{profileInfo.name}</h3>
                 <p className="me-hover">
@@ -268,7 +268,7 @@ export default function Home({ profileInfo, blogs, blogLasted, projects, hotProj
                   hotProjects.map((project) => (
                     <div className=" carbox" key={project.id}>
                       <a className={styles.imgbox} href={project.attributes.address}>
-                        <img src={`./img/project/${project.attributes.cover}.png`} alt="" />
+                        <img src={ handelrImgUrl(project.attributes.cover) } alt="" />
                       </a>
                       <div className={styles.li6carTitle}>
                         {`${project.attributes.name}：${project.attributes.abstract}`}
