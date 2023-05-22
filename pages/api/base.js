@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const baseUrl = 'http://47.115.201.17:1337/api';
+export const baseUrl = 'https://blog-cms.ruhangs.online/api';
 
 // axios.defaults.baseURL = 'http://47.115.201.17:1337/api'
 
