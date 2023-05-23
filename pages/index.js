@@ -343,7 +343,7 @@ export async function getStaticProps() {
   })
 
   const blogLasted = blogs.sort((a, b) => {
-    return a.attributes.updatedAt - b.attributes.updatedAt
+    return b.id - a.id
   }).slice(0, 4);
 
   const projects = await getProjectList().then((res) => {
@@ -351,7 +351,7 @@ export async function getStaticProps() {
   })
 
   const hotProjects = projects.sort((a, b) => {
-    return b.attributes.updatedAt - a.attributes.updatedAt
+    return b.id - a.id
   }).slice(0,2)
 
   const techs = await getTechList().then((res) => {
